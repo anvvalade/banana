@@ -1,5 +1,6 @@
 build/*
 dist/*
+banana/test_library/output*
 *egg-info
 */__pycache__/*
 
