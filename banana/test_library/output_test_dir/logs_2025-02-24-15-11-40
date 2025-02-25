@@ -1,0 +1,3 @@
+Config: INFO > Loading configuration from configs/run_model_1.yml
+IO: SUCCESS > Working directory has been set to ./output_test_dir and logger has started logging (with verbosity 2)
+Config: ERROR > analyses:plot_level of type dict should be of type dict

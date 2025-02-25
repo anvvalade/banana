@@ -1,0 +1,253 @@
+Config: INFO > Loading configuration from configs/run_model_1.yml
+IO: SUCCESS > Working directory has been set to ./output_test_dir and logger has started logging (with verbosity 2)
+Config: INFO > Optional section analyses is not found in configuration
+Config: INFO > Optional section utils is not found in configuration
+Config: WARNING > {'example': {'path': './data/observations_CF4gp.txt', 'filters': {'cut_type_0_redshift': [['type', 0], ['z_tot', '-inf', 0.05]], 'cut_type_1_redshift': [['type', 1], ['z_tot', '-inf', 0.04]], 'cut_type_2_redshift': [['type', 2], ['z_tot', '-inf', 0.03]]}}}
+Config: INFO > Saving data in the working dir
+IO: INFO > Saving data z_tot in ./output_test_dir/data/z_tot.npy
+IO: INFO > Saving data err_z_tot in ./output_test_dir/data/err_z_tot.npy
+IO: INFO > Saving data dist_mod in ./output_test_dir/data/dist_mod.npy
+IO: INFO > Saving data err_dist_mod in ./output_test_dir/data/err_dist_mod.npy
+IO: INFO > Saving data type in ./output_test_dir/data/type.npy
+IO: INFO > Saving data direction in ./output_test_dir/data/direction.npy
+IO: INFO > Saving data example_mask in ./output_test_dir/data/example_mask.npy
+Config: INFO > Saving configuration in ./output_test_dir/config.yml
+Core: INFO > Run described as: 
+             ######################################
+             ### This is a test model of banana ###
+             ######################################
+Core: WARNING > #############
+                No GPU Found!
+                #############
+                
+Core: INFO > Setting and loading libraries
+Core: INFO > Applying config to modules
+Core: INFO > Applying config to variables
+Core: INFO > Applying config to analyses
+Core: INFO > Applying config to utils
+Core: INFO > Selected modules:
+             
+              Name                                     | Requires                                           | Provides                       | Library
+             -----------------------------------------------------------------------------------------------------------------------------------------
+              LikelihoodDistanceModuli                 | dist_mod                                           | log_prob                       | ./modules.py
+              LikelihoodRedshifts                      | z_tot                                              | log_prob                       | ./modules.py
+             
+Core: INFO > Selected variables:
+             
+              Name                                     | Provides                                           | Library
+             --------------------------------------------------------------------------------------------------------
+              Distances                                | distances                                          | ./variables.py
+              Velocities                               | v_r                                                | ./variables.py
+             
+Core: SUCCESS > Loaded libraries
+Core: INFO > Building tree
+Core: SUCCESS > Tree built
+Core: INFO > The tree is 
+             
+             NODES:
+             variables       | Distances | Velocities
+             Layer 2         | CosmologicalRedshifts
+             Layer 1         | DistanceModuli | Redshift
+             Layer 0         | LikelihoodDistanceModuli | LikelihoodRedshifts
+             
+             LINKS:
+             LikelihoodDistanceModuli                                     <- DistanceModuli                          
+             LikelihoodRedshifts                                          <- Redshift                                
+             DistanceModuli                                               <- CosmologicalRedshifts                   
+             DistanceModuli                                               <- Distances                               
+             Redshift                                                     <- CosmologicalRedshifts                   
+             Redshift                                                     <- Velocities                              
+             CosmologicalRedshifts                                        <- Distances                               
+             
+Core: INFO > Parameters are {
+                 'sigma_v': 300
+                 'cosmology': {
+                     'h0': 0.746
+                     'Omega_m': 0.3
+                 }
+             }
+             
+Core: INFO > Data are
+                                                       min            max           mean            std               shape
+             z_tot                                -0.00186        0.04935        0.02031        0.01004                 941
+             err_z_tot                             0.00016        0.00016        0.00016        0.00000                 941
+             dist_mod                             24.20000       36.91000       34.21756        1.61848                 941
+             err_dist_mod                          0.04000        0.97000        0.40590        0.12483                 941
+             type                                  0.00000        1.00000        0.13603        0.34282                 941
+             direction[0]                         -0.85619        0.98238        0.40757        0.39298                 941
+             direction[1]                         -0.99968        0.35253       -0.77797        0.21014                 941
+             direction[2]                         -0.35083        0.34764        0.00864        0.17317                 941
+             example_mask                          0.00000        1.00000        0.94955        0.21888                 991
+             
+Core: SUCCESS > Instanciated Distances smoothly
+Core: SUCCESS > Instanciated Velocities smoothly
+Core: SUCCESS > Instanciated CosmologicalRedshifts smoothly
+Core: SUCCESS > Instanciated DistanceModuli smoothly
+Core: SUCCESS > Instanciated Redshift smoothly
+Core: SUCCESS > Instanciated LikelihoodDistanceModuli smoothly
+Core: SUCCESS > Instanciated LikelihoodRedshifts smoothly
+Core: SUCCESS > Instanciated all classes, got some extra definitions to do now
+Core: INFO > Signature of the log_prob function: log_prob(distances, v_r)
+Core: INFO > Details about state size 
+             Name                                               | Provides                                           | Size
+             Distances                                          | distances                                          | 941
+             Velocities                                         | v_r                                                | 941
+             State size (total)                                                                                      | 1882 (0.0143585205078125 MB)
+Core:runStrategy: INFO > Running command generateInitialState
+Core:runStrategy: SUCCESS > Succesfully ran command generateInitialState
+Core:runStrategy: INFO > Running command runDebug
+Core:runStrategy: SUCCESS > Succesfully ran command runDebug
+Core:runStrategy: INFO > Running command runKernel
+Core:runKernel: INFO > Running KernelDualAveragingNUTS with kwargs
+                       {
+                           'dual_avg_kwargs': {
+                               'num_adaptation_steps': 80
+                           }
+                           'nuts_kwargs': {
+                               'max_tree_depth': 8
+                           }
+                       }
+                       
+                       and sample kwargs
+                       {
+                           'num_results': 100
+                           'num_burnin_steps': 0
+                           'num_steps_between_results': 1
+                           'return_final_kernel_results': True
+                           'seed': [         0 1307593520]
+                       }
+                       
+Core:runKernel: INFO > Memory used by chain (alone): 1.43585205078125 MB
+Core:runKernel: INFO > Starting kernel run warmup at Mon Feb 24 13:52:49 2025
+KernelDualAveragingNUTS: INFO > Wrapping kernel into a transition kernel
+Core:runKernel: SUCCESS > Done running warmup at Mon Feb 24 13:52:51 2025 in 0h:0m:2s
+Core:runStrategy: SUCCESS > Succesfully ran command runKernel
+Core:runStrategy: INFO > Running command saveResults
+IO: INFO > Saving data current_state_['distances'] in ./output_test_dir/results/current_state_['distances'].npy
+IO: INFO > Saving data current_state_['v_r'] in ./output_test_dir/results/current_state_['v_r'].npy
+IO: INFO > Saving data warmup_last_kernel_results to ./output_test_dir/results/warmup_last_kernel_results.dill
+IO: INFO > Saving data warmup_distances in ./output_test_dir/results/warmup_distances.npy
+IO: INFO > Saving data warmup_v_r in ./output_test_dir/results/warmup_v_r.npy
+IO: INFO > Saving data warmup_log_prob in ./output_test_dir/results/warmup_log_prob.npy
+IO: INFO > Saving data warmup_is_accepted in ./output_test_dir/results/warmup_is_accepted.npy
+IO: INFO > Saving data warmup_step_size in ./output_test_dir/results/warmup_step_size.npy
+IO: INFO > Saving data warmup_leapfrogs_taken in ./output_test_dir/results/warmup_leapfrogs_taken.npy
+IO: INFO > Saving data warmup_has_divergence in ./output_test_dir/results/warmup_has_divergence.npy
+IO: INFO > Saving data warmup_reach_max_depth in ./output_test_dir/results/warmup_reach_max_depth.npy
+IO: INFO > Saving data warmup_accept_ratio in ./output_test_dir/results/warmup_accept_ratio.npy
+Core:runStrategy: SUCCESS > Succesfully ran command saveResults
+Core:runStrategy: INFO > Running command summarize
+KernelDualAveragingNUTS: INFO > Summary of warmup
+                                log_prob            : max =          nan | min =          nan | mean =          nan | std =          nan | first =          nan | last =          nan
+                                is_accepted         : rate =       0.00% | first =          0 | last =            0
+                                step_size           : max =         1.00 | min =         0.00 | mean =         0.01 | std =         0.10 | first =         1.00 | last =         0.00
+                                leapfrogs_taken     : rate =     100.00% | first =          1 | last =            1
+                                has_divergence      : rate =     100.00% | first =          1 | last =            1
+                                reach_max_depth     : rate =       0.00% | first =          0 | last =            0
+                                accept_ratio        : rate =       0.00% | first =          0 | last =            0
+                                
+Distances: INFO > Summary of warmup:distances
+                                                            min            max           mean            std               shape
+                  post mean                          -618.88586    14801.31445     6089.92676     3009.57910                 941
+                  post std                              0.00000        6.92820        0.92128        1.42111                 941
+                  post std / prior std                  0.00000        2.30940        0.30699        0.47376                 941
+                  (po_m - pr_m) / po_std             -478.15405      964.31055       -0.03170       37.31622                 941
+                  R Split                                   nan            nan            nan            nan                 941
+                  ESS                                   1.00000        1.00000        1.00000        0.00000                 941
+                  ESS / sample size (%)                 1.00000        1.00000        1.00000        0.00000                 941
+                  
+Velocities: INFO > Summary of warmup:v_r
+                                                             min            max           mean            std               shape
+                   post mean                          -856.23956      983.26770        6.41335      285.10629                 941
+                   post std                              0.00000        0.35355        0.02763        0.05570                 941
+                   post std / prior std                  0.00000        0.00118        0.00009        0.00019                 941
+                   (po_m - pr_m) / po_std            -4075.98950     4048.13330      -18.23707     1710.71887                 941
+                   R Split                                   nan            nan            nan            nan                 941
+                   ESS                                   1.00000        1.00000        1.00000        0.00000                 941
+                   ESS / sample size (%)                 1.00000        1.00000        1.00000        0.00000                 941
+                   
+Core:runStrategy: SUCCESS > Succesfully ran command summarize
+Core:runStrategy: INFO > Running command runTraceAnalysis
+Core:analyze: INFO > Analysing trace
+Core:runStrategy: SUCCESS > Succesfully ran command runTraceAnalysis
+Core:runStrategy: INFO > Running command forgetChain
+forgetChain: INFO > Forgetting everything about warmup: ['warmup:*', 'warmup:chain', 'warmup:trace', 'warmup:kernel_instance', 'warmup:time_kernel_run', 'warmup:n_steps']
+Core:runStrategy: SUCCESS > Succesfully ran command forgetChain
+Core:runStrategy: INFO > Running command runKernel
+Core:runKernel: INFO > Running KernelNUTS with kwargs
+                       {
+                           'nuts_kwargs': {
+                               'max_tree_depth': 8
+                           }
+                       }
+                       
+                       and sample kwargs
+                       {
+                           'num_results': 100
+                           'num_burnin_steps': 0
+                           'num_steps_between_results': 1
+                           'return_final_kernel_results': True
+                           'seed': [         0 4120832851]
+                       }
+                       
+KernelNUTS: INFO > Wrapping kernel into a transition kernel
+Core:runKernel: INFO > Memory used by chain (alone): 1.43585205078125 MB
+Core:runKernel: INFO > Starting kernel run main at Mon Feb 24 13:52:57 2025
+Core:runKernel: INFO > Expected running time: 0h:0m:2s
+Core:runKernel: INFO > Expected end time: Mon Feb 24 13:52:59 2025
+KernelNUTS: INFO > Wrapping kernel into a transition kernel
+Core:runKernel: SUCCESS > Done running main at Mon Feb 24 13:52:59 2025 in 0h:0m:1s
+Core:runStrategy: SUCCESS > Succesfully ran command runKernel
+Core:runStrategy: INFO > Running command saveResults
+IO: INFO > Saving data current_state_['distances'] in ./output_test_dir/results/current_state_['distances'].npy
+IO: WARNING > ./output_test_dir/results/current_state_['distances'].npy exists, overwriting it
+IO: INFO > Saving data current_state_['v_r'] in ./output_test_dir/results/current_state_['v_r'].npy
+IO: WARNING > ./output_test_dir/results/current_state_['v_r'].npy exists, overwriting it
+IO: INFO > Saving data main_last_kernel_results to ./output_test_dir/results/main_last_kernel_results.dill
+IO: INFO > Saving data main_distances in ./output_test_dir/results/main_distances.npy
+IO: INFO > Saving data main_v_r in ./output_test_dir/results/main_v_r.npy
+IO: INFO > Saving data main_log_prob in ./output_test_dir/results/main_log_prob.npy
+IO: INFO > Saving data main_is_accepted in ./output_test_dir/results/main_is_accepted.npy
+IO: INFO > Saving data main_step_size in ./output_test_dir/results/main_step_size.npy
+IO: INFO > Saving data main_leapfrogs_taken in ./output_test_dir/results/main_leapfrogs_taken.npy
+IO: INFO > Saving data main_has_divergence in ./output_test_dir/results/main_has_divergence.npy
+IO: INFO > Saving data main_reach_max_depth in ./output_test_dir/results/main_reach_max_depth.npy
+IO: INFO > Saving data main_accept_ratio in ./output_test_dir/results/main_accept_ratio.npy
+Core:runStrategy: SUCCESS > Succesfully ran command saveResults
+Core:runStrategy: INFO > Running command summarize
+KernelNUTS: INFO > Summary of main
+                   log_prob            : max =          nan | min =          nan | mean =          nan | std =          nan | first =          nan | last =          nan
+                   is_accepted         : rate =       0.00% | first =          0 | last =            0
+                   step_size           : rate =       0.00% | first =          0 | last =            0
+                   leapfrogs_taken     : rate =     100.00% | first =          1 | last =            1
+                   has_divergence      : rate =     100.00% | first =          1 | last =            1
+                   reach_max_depth     : rate =       0.00% | first =          0 | last =            0
+                   accept_ratio        : rate =       0.00% | first =          0 | last =            0
+                   
+Distances: INFO > Summary of main:distances
+                                                            min            max           mean            std               shape
+                  post mean                          -618.88586    14801.31445     6089.92676     3009.57910                 941
+                  post std                              0.00000        6.92820        0.92128        1.42111                 941
+                  post std / prior std                  0.00000        2.30940        0.30699        0.47376                 941
+                  (po_m - pr_m) / po_std             -478.15405      964.31055       -0.03170       37.31622                 941
+                  R Split                                   nan            nan            nan            nan                 941
+                  ESS                                   1.00000        1.00000        1.00000        0.00000                 941
+                  ESS / sample size (%)                 1.00000        1.00000        1.00000        0.00000                 941
+                  
+Velocities: INFO > Summary of main:v_r
+                                                             min            max           mean            std               shape
+                   post mean                          -856.23956      983.26770        6.41335      285.10629                 941
+                   post std                              0.00000        0.35355        0.02763        0.05570                 941
+                   post std / prior std                  0.00000        0.00118        0.00009        0.00019                 941
+                   (po_m - pr_m) / po_std            -4075.98950     4048.13330      -18.23707     1710.71887                 941
+                   R Split                                   nan            nan            nan            nan                 941
+                   ESS                                   1.00000        1.00000        1.00000        0.00000                 941
+                   ESS / sample size (%)                 1.00000        1.00000        1.00000        0.00000                 941
+                   
+Core:runStrategy: SUCCESS > Succesfully ran command summarize
+Core:runStrategy: INFO > Running command runTraceAnalysis
+Core:analyze: INFO > Analysing trace
+Core:runStrategy: SUCCESS > Succesfully ran command runTraceAnalysis
+Core:runStrategy: INFO > Running command runAnalysis
+Core:runStrategy: SUCCESS > Succesfully ran command runAnalysis
+LogServer: SUCCESS > Done logging, exciting properly!

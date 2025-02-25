@@ -1,0 +1,298 @@
+Config: INFO > Loading configuration from configs/run_model_1.yml
+IO: SUCCESS > Working directory has been set to ./output_test_dir and logger has started logging (with verbosity 2)
+Config: INFO > Optional section utils is not found in configuration
+Config: WARNING > {'example': {'path': './data/observations_CF4gp.txt', 'filters': {'cut_type_0_redshift': [['type', 0], ['z_tot', 0.01, 0.05]], 'cut_type_1_redshift': [['type', 1], ['z_tot', 0.01, 0.04]], 'cut_type_2_redshift': [['type', 2], ['z_tot', 0.01, 0.03]]}}}
+Config: INFO > Saving data in the working dir
+IO: INFO > Saving data z_tot in ./output_test_dir/data/z_tot.npy
+IO: WARNING > ./output_test_dir/data/z_tot.npy exists, overwriting it
+IO: INFO > Saving data err_z_tot in ./output_test_dir/data/err_z_tot.npy
+IO: WARNING > ./output_test_dir/data/err_z_tot.npy exists, overwriting it
+IO: INFO > Saving data dist_mod in ./output_test_dir/data/dist_mod.npy
+IO: WARNING > ./output_test_dir/data/dist_mod.npy exists, overwriting it
+IO: INFO > Saving data err_dist_mod in ./output_test_dir/data/err_dist_mod.npy
+IO: WARNING > ./output_test_dir/data/err_dist_mod.npy exists, overwriting it
+IO: INFO > Saving data type in ./output_test_dir/data/type.npy
+IO: WARNING > ./output_test_dir/data/type.npy exists, overwriting it
+IO: INFO > Saving data direction in ./output_test_dir/data/direction.npy
+IO: WARNING > ./output_test_dir/data/direction.npy exists, overwriting it
+IO: INFO > Saving data example_mask in ./output_test_dir/data/example_mask.npy
+IO: WARNING > ./output_test_dir/data/example_mask.npy exists, overwriting it
+Config: INFO > Saving configuration in ./output_test_dir/config.yml
+Core: INFO > Run described as: 
+             ######################################
+             ### This is a test model of banana ###
+             ######################################
+Core: WARNING > #############
+                No GPU Found!
+                #############
+                
+Core: INFO > Setting and loading libraries
+Core: INFO > Applying config to modules
+Core: INFO > Applying config to variables
+Core: INFO > Applying config to analyses
+Core: INFO > Static attributes were set on TestAnalysis:
+             {
+                 'plot_level': 1
+                 'save_level': 1
+             }
+             
+Core: INFO > Applying config to utils
+Core: INFO > Selected modules:
+             
+              Name                                     | Requires                                           | Provides                       | Library
+             -----------------------------------------------------------------------------------------------------------------------------------------
+              LikelihoodDistanceModuli                 | dist_mod                                           | log_prob                       | ./modules.py
+              LikelihoodRedshifts                      | z_tot                                              | log_prob                       | ./modules.py
+              PriorDistances                           | distances                                          | log_prob                       | ./modules.py
+              PriorVelocities                          | v_r                                                | log_prob                       | ./modules.py
+             
+Core: INFO > Selected variables:
+             
+              Name                                     | Provides                                           | Library
+             --------------------------------------------------------------------------------------------------------
+              Distances                                | distances                                          | ./variables.py
+              Velocities                               | v_r                                                | ./variables.py
+             
+Core: INFO > Selected analyses:
+             
+              Name                                               | Library
+             -------------------------------------------------------------
+              TestAnalysis                                       | ./analyses.py
+             
+Core: SUCCESS > Loaded libraries
+Core: INFO > Building tree
+Core: SUCCESS > Tree built
+Core: INFO > The tree is 
+             
+             NODES:
+             variables       | Distances | Velocities
+             Layer 2         | CosmologicalRedshifts
+             Layer 1         | DistanceModuli | Redshifts
+             Layer 0         | LikelihoodDistanceModuli | LikelihoodRedshifts | PriorDistances | PriorVelocities
+             
+             LINKS:
+             LikelihoodDistanceModuli                                     <- DistanceModuli                          
+             LikelihoodRedshifts                                          <- Redshifts                               
+             PriorDistances                                               <- Distances                               
+             PriorVelocities                                              <- Velocities                              
+             DistanceModuli                                               <- CosmologicalRedshifts                   
+             DistanceModuli                                               <- Distances                               
+             Redshifts                                                    <- CosmologicalRedshifts                   
+             Redshifts                                                    <- Velocities                              
+             CosmologicalRedshifts                                        <- Distances                               
+             
+Core: INFO > Parameters are {
+                 'sigma_v': 300.0
+                 'cosmology': {
+                     'h0': 0.746
+                     'Omega_m': 0.3
+                 }
+             }
+             
+Core: INFO > Data are
+                                                       min            max           mean            std               shape
+             z_tot                                 0.01041        0.04935        0.02269        0.00847                 817
+             err_z_tot                             0.00016        0.00016        0.00016        0.00000                 817
+             dist_mod                             32.41000       36.91000       34.68616        0.85236                 817
+             err_dist_mod                          0.04000        0.84000        0.41067        0.11373                 817
+             type                                  0.00000        1.00000        0.15422        0.36116                 817
+             direction[0]                         -0.79950        0.98238        0.41089        0.39290                 817
+             direction[1]                         -0.99968        0.35253       -0.77606        0.20799                 817
+             direction[2]                         -0.35083        0.34021        0.01287        0.17635                 817
+             example_mask                          0.00000        1.00000        0.82442        0.38046                 991
+             
+Core: SUCCESS > Instanciated Distances smoothly
+Core: SUCCESS > Instanciated Velocities smoothly
+Core: SUCCESS > Instanciated CosmologicalRedshifts smoothly
+Core: SUCCESS > Instanciated DistanceModuli smoothly
+Redshifts: DEBUG >     1 / c = 3.335640940349549e-06
+Core: SUCCESS > Instanciated Redshifts smoothly
+Core: SUCCESS > Instanciated LikelihoodDistanceModuli smoothly
+Core: SUCCESS > Instanciated LikelihoodRedshifts smoothly
+Core: SUCCESS > Instanciated PriorDistances smoothly
+Core: SUCCESS > Instanciated PriorVelocities smoothly
+Core: SUCCESS > Instanciated TestAnalysis smoothly
+Core: SUCCESS > Instanciated all classes, got some extra definitions to do now
+Core: INFO > Signature of the log_prob function: log_prob(distances, v_r)
+Core: INFO > Details about state size 
+             Name                                               | Provides                                           | Size
+             Distances                                          | distances                                          | 817
+             Velocities                                         | v_r                                                | 817
+             State size (total)                                                                                      | 1634 (0.0124664306640625 MB)
+Core:runStrategy: INFO > Running command generateInitialState
+Core:runStrategy: SUCCESS > Succesfully ran command generateInitialState
+Core:runStrategy: INFO > Running command runDebug
+Core:runStrategy: SUCCESS > Succesfully ran command runDebug
+Core:runStrategy: INFO > Running command runKernel
+Core:runKernel: INFO > Running KernelDualAveragingNUTS with kwargs
+                       {
+                           'dual_avg_kwargs': {
+                               'num_adaptation_steps': 80
+                           }
+                           'nuts_kwargs': {
+                               'max_tree_depth': 8
+                           }
+                       }
+                       
+                       and sample kwargs
+                       {
+                           'num_results': 100
+                           'num_burnin_steps': 0
+                           'num_steps_between_results': 1
+                           'return_final_kernel_results': True
+                           'seed': [         0 2484859383]
+                       }
+                       
+Core:runKernel: INFO > Memory used by chain (alone): 1.24664306640625 MB
+Core:runKernel: INFO > Starting kernel run warmup at Mon Feb 24 15:12:21 2025
+KernelDualAveragingNUTS: INFO > Wrapping kernel into a transition kernel
+Core:runKernel: SUCCESS > Done running warmup at Mon Feb 24 15:12:23 2025 in 0h:0m:2s
+Core:runStrategy: SUCCESS > Succesfully ran command runKernel
+Core:runStrategy: INFO > Running command saveResults
+IO: INFO > Saving data current_state_['distances'] in ./output_test_dir/results/current_state_['distances'].npy
+IO: INFO > Saving data current_state_['v_r'] in ./output_test_dir/results/current_state_['v_r'].npy
+IO: INFO > Saving data warmup_last_kernel_results to ./output_test_dir/results/warmup_last_kernel_results.dill
+IO: INFO > Saving data warmup_distances in ./output_test_dir/results/warmup_distances.npy
+IO: WARNING > ./output_test_dir/results/warmup_distances.npy exists, overwriting it
+IO: INFO > Saving data warmup_v_r in ./output_test_dir/results/warmup_v_r.npy
+IO: WARNING > ./output_test_dir/results/warmup_v_r.npy exists, overwriting it
+IO: INFO > Saving data warmup_log_prob in ./output_test_dir/results/warmup_log_prob.npy
+IO: WARNING > ./output_test_dir/results/warmup_log_prob.npy exists, overwriting it
+IO: INFO > Saving data warmup_is_accepted in ./output_test_dir/results/warmup_is_accepted.npy
+IO: WARNING > ./output_test_dir/results/warmup_is_accepted.npy exists, overwriting it
+IO: INFO > Saving data warmup_step_size in ./output_test_dir/results/warmup_step_size.npy
+IO: WARNING > ./output_test_dir/results/warmup_step_size.npy exists, overwriting it
+IO: INFO > Saving data warmup_leapfrogs_taken in ./output_test_dir/results/warmup_leapfrogs_taken.npy
+IO: WARNING > ./output_test_dir/results/warmup_leapfrogs_taken.npy exists, overwriting it
+IO: INFO > Saving data warmup_has_divergence in ./output_test_dir/results/warmup_has_divergence.npy
+IO: WARNING > ./output_test_dir/results/warmup_has_divergence.npy exists, overwriting it
+IO: INFO > Saving data warmup_reach_max_depth in ./output_test_dir/results/warmup_reach_max_depth.npy
+IO: WARNING > ./output_test_dir/results/warmup_reach_max_depth.npy exists, overwriting it
+IO: INFO > Saving data warmup_accept_ratio in ./output_test_dir/results/warmup_accept_ratio.npy
+IO: WARNING > ./output_test_dir/results/warmup_accept_ratio.npy exists, overwriting it
+Core:runStrategy: SUCCESS > Succesfully ran command saveResults
+Core:runStrategy: INFO > Running command summarize
+KernelDualAveragingNUTS: INFO > Summary of warmup
+                                log_prob            : max =       133.19 | min =    -14821.49 | mean =       -84.39 | std =      1481.45 | first =    -14821.49 | last =        30.65
+                                is_accepted         : rate =     100.00% | first =          1 | last =            1
+                                step_size           : max =        12.66 | min =         1.00 | mean =         2.30 | std =         1.13 | first =         1.00 | last =         2.14
+                                leapfrogs_taken     : max =       255.00 | min =        15.00 | mean =       250.36 | std =        32.50 | first =        15.00 | last =       255.00
+                                has_divergence      : rate =       0.00% | first =          0 | last =            0
+                                reach_max_depth     : rate =      45.00% | first =          0 | last =            1
+                                accept_ratio        : max =         1.00 | min =         0.78 | mean =         0.95 | std =         0.05 | first =         1.00 | last =         0.96
+                                
+Distances: INFO > Summary of warmup:distances
+                                                            min            max           mean            std               shape
+                  post mean                            34.19176      164.30594       71.10365       24.99214                 817
+                  post std                              2.13874        4.07138        2.88498        0.26136                 817
+                  post std / prior std                  0.71291        4.03859        0.97577        0.18732                 817
+                  (po_m - pr_m) / po_std               -0.40006        8.99467        1.08233        1.35019                 817
+                  R Split                               0.84700        1.00000        0.99048        0.01278                 817
+                  ESS                                  26.28660      100.00000       82.34997       16.41152                 817
+                  ESS / sample size (%)                26.28660      100.00000       82.34997       16.41152                 817
+                  
+Velocities: INFO > Summary of warmup:v_r
+                                                             min            max           mean            std               shape
+                   post mean                         -3533.63525        7.76312     -334.28290      382.18610                 817
+                   post std                            210.96608      416.42047      281.62363       24.98406                 817
+                   post std / prior std                  0.70322        1.38807        0.93875        0.08328                 817
+                   (po_m - pr_m) / po_std               -9.50109        0.02761       -1.19572        1.29723                 817
+                   R Split                               0.85202        1.00000        0.99034        0.01265                 817
+                   ESS                                  28.33016      100.00000       82.41240       16.44372                 817
+                   ESS / sample size (%)                28.33016      100.00000       82.41240       16.44372                 817
+                   
+Core:runStrategy: SUCCESS > Succesfully ran command summarize
+Core:runStrategy: INFO > Running command runTraceAnalysis
+Core:analyze: INFO > Analysing trace
+Core:runStrategy: SUCCESS > Succesfully ran command runTraceAnalysis
+Core:runStrategy: INFO > Running command forgetChain
+forgetChain: INFO > Forgetting everything about warmup: ['warmup:*', 'warmup:chain', 'warmup:trace', 'warmup:kernel_instance', 'warmup:time_kernel_run', 'warmup:n_steps']
+Core:runStrategy: SUCCESS > Succesfully ran command forgetChain
+Core:runStrategy: INFO > Running command runKernel
+Core:runKernel: INFO > Running KernelNUTS with kwargs
+                       {
+                           'nuts_kwargs': {
+                               'max_tree_depth': 8
+                           }
+                       }
+                       
+                       and sample kwargs
+                       {
+                           'num_results': 100
+                           'num_burnin_steps': 0
+                           'num_steps_between_results': 1
+                           'return_final_kernel_results': True
+                           'seed': [         0 3577936176]
+                       }
+                       
+KernelNUTS: INFO > Wrapping kernel into a transition kernel
+Core:runKernel: INFO > Memory used by chain (alone): 1.24664306640625 MB
+Core:runKernel: INFO > Starting kernel run main at Mon Feb 24 15:12:30 2025
+Core:runKernel: INFO > Expected running time: 0h:0m:2s
+Core:runKernel: INFO > Expected end time: Mon Feb 24 15:12:32 2025
+
+KernelNUTS: INFO > Wrapping kernel into a transition kernel
+Core:runKernel: SUCCESS > Done running main at Mon Feb 24 15:12:32 2025 in 0h:0m:2s
+Core:runStrategy: SUCCESS > Succesfully ran command runKernel
+Core:runStrategy: INFO > Running command saveResults
+IO: INFO > Saving data current_state_['distances'] in ./output_test_dir/results/current_state_['distances'].npy
+IO: WARNING > ./output_test_dir/results/current_state_['distances'].npy exists, overwriting it
+IO: INFO > Saving data current_state_['v_r'] in ./output_test_dir/results/current_state_['v_r'].npy
+IO: WARNING > ./output_test_dir/results/current_state_['v_r'].npy exists, overwriting it
+IO: INFO > Saving data main_last_kernel_results to ./output_test_dir/results/main_last_kernel_results.dill
+IO: INFO > Saving data main_distances in ./output_test_dir/results/main_distances.npy
+IO: WARNING > ./output_test_dir/results/main_distances.npy exists, overwriting it
+IO: INFO > Saving data main_v_r in ./output_test_dir/results/main_v_r.npy
+IO: WARNING > ./output_test_dir/results/main_v_r.npy exists, overwriting it
+IO: INFO > Saving data main_log_prob in ./output_test_dir/results/main_log_prob.npy
+IO: WARNING > ./output_test_dir/results/main_log_prob.npy exists, overwriting it
+IO: INFO > Saving data main_is_accepted in ./output_test_dir/results/main_is_accepted.npy
+IO: WARNING > ./output_test_dir/results/main_is_accepted.npy exists, overwriting it
+IO: INFO > Saving data main_step_size in ./output_test_dir/results/main_step_size.npy
+IO: WARNING > ./output_test_dir/results/main_step_size.npy exists, overwriting it
+IO: INFO > Saving data main_leapfrogs_taken in ./output_test_dir/results/main_leapfrogs_taken.npy
+IO: WARNING > ./output_test_dir/results/main_leapfrogs_taken.npy exists, overwriting it
+IO: INFO > Saving data main_has_divergence in ./output_test_dir/results/main_has_divergence.npy
+IO: WARNING > ./output_test_dir/results/main_has_divergence.npy exists, overwriting it
+IO: INFO > Saving data main_reach_max_depth in ./output_test_dir/results/main_reach_max_depth.npy
+IO: WARNING > ./output_test_dir/results/main_reach_max_depth.npy exists, overwriting it
+IO: INFO > Saving data main_accept_ratio in ./output_test_dir/results/main_accept_ratio.npy
+IO: WARNING > ./output_test_dir/results/main_accept_ratio.npy exists, overwriting it
+Core:runStrategy: SUCCESS > Succesfully ran command saveResults
+Core:runStrategy: INFO > Running command summarize
+KernelNUTS: INFO > Summary of main
+                   log_prob            : max =       131.56 | min =       -36.73 | mean =        62.97 | std =        29.22 | first =        59.07 | last =        80.07
+                   is_accepted         : rate =     100.00% | first =          1 | last =            1
+                   step_size           : max =         2.14 | min =         2.14 | mean =         2.14 | std =         0.00 | first =         2.14 | last =         2.14
+                   leapfrogs_taken     : max =       255.00 | min =       255.00 | mean =       255.00 | std =         0.00 | first =       255.00 | last =       255.00
+                   has_divergence      : rate =       0.00% | first =          0 | last =            0
+                   reach_max_depth     : rate =      37.00% | first =          0 | last =            0
+                   accept_ratio        : max =         1.00 | min =         0.78 | mean =         0.96 | std =         0.05 | first =         1.00 | last =         0.78
+                   
+Distances: INFO > Summary of main:distances
+                                                            min            max           mean            std               shape
+                  post mean                            34.61864      164.73703       71.14474       24.99518                 817
+                  post std                              1.13838        3.65839        2.85037        0.29101                 817
+                  post std / prior std                  0.63349        1.67632        0.95727        0.09286                 817
+                  (po_m - pr_m) / po_std               -0.33526       23.55410        1.23387        2.10998                 817
+                  R Split                               0.92970        1.00009        0.99167        0.00871                 817
+                  ESS                                  22.02794      100.00000       87.53403       15.62996                 817
+                  ESS / sample size (%)                22.02794      100.00000       87.53403       15.62996                 817
+                  
+Velocities: INFO > Summary of main:v_r
+                                                             min            max           mean            std               shape
+                   post mean                         -3575.95264       58.24365     -338.80569      385.21854                 817
+                   post std                            119.11549      362.15457      278.24661       28.01780                 817
+                   post std / prior std                  0.39705        1.20718        0.92749        0.09339                 817
+                   (po_m - pr_m) / po_std              -21.65473        0.20421       -1.34779        2.03829                 817
+                   R Split                               0.93610        0.99999        0.99165        0.00863                 817
+                   ESS                                  22.99240      100.00000       87.30408       15.80702                 817
+                   ESS / sample size (%)                22.99240      100.00000       87.30408       15.80702                 817
+                   
+Core:runStrategy: SUCCESS > Succesfully ran command summarize
+Core:runStrategy: INFO > Running command runTraceAnalysis
+Core:analyze: INFO > Analysing trace
+Core:runStrategy: SUCCESS > Succesfully ran command runTraceAnalysis
+Core:runStrategy: INFO > Running command runAnalysis
+Core:runStrategy: SUCCESS > Succesfully ran command runAnalysis
+LogServer: SUCCESS > Done logging, exciting properly!
