@@ -1,8 +1,0 @@
-name: py38-tf
-channels:
-  - defaults
-dependencies:
-  - python=3.8
-  - cudatoolkit=11.2
-  - cudnn=8.8
-prefix: /home/avalade/.conda/envs/py38-tf
