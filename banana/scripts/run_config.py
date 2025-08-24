@@ -24,6 +24,6 @@ else:
     argv = []
 
 
-BC = BananaCore(cfile, argv, verbosity=2)
+BC = BananaCore(cfile, argv, verbosity=3)
 BC.buildLogProb()
 BC.runStrategy()

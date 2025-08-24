@@ -910,6 +910,9 @@ def isInstance(
     # print(f"{type(obj)=}")
     # print(f"{_type=}")
 
+    # Any is a type but cannot be used in isinstance
+    if _type == Any:
+        return True, name, printType(_type, embedded=True) 
     # simple case
     if isinstance(_type, (tuple, type)):
         return isinstance(obj, _type), name, printType(_type, embedded=True)

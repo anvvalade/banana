@@ -1,4 +1,3 @@
-import networkx as nx
 from .logger import Logger
 import matplotlib.pyplot as plt
 from matplotlib import colors as mpcl

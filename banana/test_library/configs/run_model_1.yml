@@ -7,7 +7,7 @@ general:
   copy_libraries: False                                       # not implemented yet
     
 logging:
-    verbosity: 2                                              # general verbosity of the core
+    verbosity: 3                                              # general verbosity of the core
     debug_classes: &debug_classes ['Redshifts']               # targeted verbosity for modules / variables etc (initialization)
     highlights: *debug_classes                                # highlight words in the std output
 
