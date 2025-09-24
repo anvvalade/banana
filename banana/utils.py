@@ -1,5 +1,4 @@
-import time
-from typing import Union, Any, Optional, List, Tuple, Dict, TypeVar
+from typing import Union, Any, Optional, List, Tuple, Dict
 from types import ModuleType
 from functools import partial
 from tqdm import tqdm, trange
@@ -14,14 +13,13 @@ from jax._src.public_test_util import (
     inner_prod,
     rand_like,
 )
-
+from jax.scipy.ndimage import map_coordinates
+import numpy as np
 
 from tensorflow_probability.substrates import jax as tfp
-
-import numpy as np
 import inspect
 
-from .common import fdtype, cdtype, idtype, Jnp_ndarray, jnp_ndarray, TypingType
+from .common import fdtype, idtype, cdtype, Jnp_ndarray, TypingType
 
 
 ##############
@@ -878,18 +876,19 @@ def printType(
         for mod in hide_modules:
             str_type = str_type.replace(f"{mod}.", "")
     elif hide_modules == "all":
-        # 'a/b/c.py.TYPE' -> 'TYPE'
+        # 'Optional[a/b/c.py.TYPE]' -> 'Optinal[TYPE]'
         # find a point and walk backward
         c = 0
         while (dot := str_type.rfind(".")) >= 0:
             pos = dot - 1
-            while pos >= 0 and (str_type[pos].isalpha() or str_type[pos] in "./"):
+            while pos >= 0 and (str_type[pos].isalpha() or str_type[pos] in "./-_"):
                 if c > 1000:
                     raise
                 c += 1
                 pos -= 1
 
             str_type = str_type[: pos + 1] + str_type[dot + 1 :]
+        # str_type = str_type[str_type.rfind(".") + 1 :]
     else:
         raise ValueError(f"hide_modules not understood: {hide_modules}")
 
@@ -912,7 +911,7 @@ def isInstance(
 
     # Any is a type but cannot be used in isinstance
     if _type == Any:
-        return True, name, printType(_type, embedded=True) 
+        return True, name, printType(_type, embedded=True)
     # simple case
     if isinstance(_type, (tuple, type)):
         return isinstance(obj, _type), name, printType(_type, embedded=True)
@@ -1151,3 +1150,50 @@ def checkVJP(f, args, eps, use_tqdm=False, n_rand=1, n_out=None):
         inout_err.append(_err)
 
     return v_out, np.squeeze(inout_err)
+
+
+### GRID UTILS ###
+
+
+def subsample3DGrid(field: Jnp_ndarray, L_in: int, n_out: int, L_out: int):
+    n_in = field.shape[0]
+    if n_in == n_out and L_in == L_out:
+        return field
+    elif (L_in / L_out % 2 == 0) and (n_in / n_out % 2 == 0):
+        ratio = L_in // L_out
+        beg = n_in // 2 - ratio * n_in // 2
+        end = n_in // 2 + ratio * n_in // 2
+        step = (end - beg) // n_out
+        if step == 0:
+            raise ValueError(
+                f"Cannot subsamble grid {n_in=} {L_in=} to {n_out=} {L_out=}"
+            )
+
+        sl = slice(beg, end, step)
+        return field[(sl,) * 3]
+    else:
+        raise ValueError(f"Cannot subsamble grid {n_in=} {L_in=} to {n_out=} {L_out=}")
+
+
+def interpolateOn3DGrid(
+    field: Jnp_ndarray, positions: Jnp_ndarray, L_grid: fdtype
+) -> Jnp_ndarray:
+    """
+
+    Parameters
+    ----------
+    field: Jnp_ndarray :
+
+    positions: Jnp_ndarray :
+
+    L_grid: fdtype :
+
+
+    Returns
+    -------
+
+
+    """
+    return map_coordinates(
+        field, field.shape[0] / L_grid * (positions + L_grid / 2), order=1
+    )

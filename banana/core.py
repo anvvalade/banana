@@ -897,8 +897,11 @@ class BananaCore:
         is_loaded_class = []
         _globals = []
         for i, (glob, _type) in enumerate(zip(globals, str_types)):
-            for substr in ["Optional[", "]"]:
-                _type = _type.replace(substr, "")
+            # removing Optional[...]
+            if "Optional" in _type:
+                _type = _type[_type.find('[') + 1: _type.rfind(']')]
+            # for substr in ["Optional[", "]"]:
+            #     _type = _type.replace(substr, "")
             if _type in self._all_loaded_classnames_classes:
                 is_loaded_class.append(True)
                 globals[i] = _type
@@ -1707,8 +1710,9 @@ class BananaCore:
         if not run:
             return {}
 
-        self.getDebugLogProb()(*current_state, debug_classes=debug_classes)
+        res = self.getDebugLogProb()(*current_state, debug_classes=debug_classes)
 
+        self._logger.info(f"Got log_prob = {res}")
         if run == "only":
             raise KeyboardInterrupt(
                 "This is not an issue, just a shortcut: run == 'only' dies after running debug!"
@@ -2527,7 +2531,7 @@ class BananaCore:
         )
         self._logger.info(
             f"Expected run time for {n_eval} evalutions: {mrtime * n_eval} "
-            f"+- {srtime / np.sqrt(n_eval)} /!\ not taking gradients into account",
+            f"+- {srtime / np.sqrt(n_eval)} /!\\ not taking gradients into account",
             flush=True,
         )
 

@@ -63,7 +63,10 @@ class GeneralAnalysis(BaseAnalysis):
         self._save = (
             self.save
             if isinstance(self.save, dict)
-            else {q: (self.save is True or q in self.save) for q in self.quantities}
+            else {
+                q: (self.save in (True, False) or q in self.save)
+                for q in self.quantities
+            }
         )
 
         self._targets = {}

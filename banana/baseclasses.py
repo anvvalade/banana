@@ -278,6 +278,7 @@ class BaseClass:
         exts = self._save_exts if exts is None else np.atleast_1d(exts)
 
         if isinstance(data, dict):
+            fmt = {k: fmt for k in data} if not isinstance(fmt, dict) else fmt
             self._logger.Assert(
                 len(exts) == 1
                 and exts[0] == "npz"
@@ -285,7 +286,7 @@ class BaseClass:
                 and all(k in fmt for k in data),
                 ValueError(
                     "dict data can only be saved to npz file, "
-                    "fmt has to be a dict with the same keys as data. "
+                    "fmt has to be either a single value or a dict with the same keys as data. "
                     f"Got {exts=}, fmt={fmt} and data={printDict(data, embedded=True)}"
                 ),
             )
